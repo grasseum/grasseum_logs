@@ -1,22 +1,28 @@
 
-var path = require('path');
-var dirHidden = '.grasseum';
-var grasseum_core = require("grasseum_core");
-var grasseum_directory = require("grasseum_directory");
-var directory_cmd = grasseum_directory.directory();
-const log = grasseum_core.log();
-exports.createLogs = function(dir){
+const path = require('path');
+const dirHidden = '.grasseum';
+const grasseum_console = require("grasseum_console");
+const grasseum_directory = require("grasseum_directory");
+const directory_cmd = grasseum_directory.directory();
 
-    
-    
+exports.createLogs = function (dir) {
 
-    var pathJoin = path.join(dir,dirHidden);
-    directory_cmd.createFolder(pathJoin,function(action){
-       if(action["status"] == "folder_created"){
-        log.green("Logs folders is now generated");
-       }
-        
-    },function(e){
-        log.red("Failed generate Logs folders");
-    })
-}
+
+    const pathJoin = path.join(dir, dirHidden);
+
+    directory_cmd.createFolder(pathJoin, function (action) {
+
+        if (action.status === "folder_created") {
+
+            grasseum_console.logGreen("Logs folders is now generated");
+
+        }
+
+    }, function (error) {
+
+        grasseum_console.logRed("Failed generate Logs folders");
+        grasseum_console.logRed(error);
+
+    });
+
+};
